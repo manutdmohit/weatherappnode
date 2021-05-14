@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+     * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.box {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
+  margin-top: 150px;
+  height: 68vh;
+  background: #0b57e8;
+  width: 20vw;
+  margin: 100px auto;
+  border-radius: 4px;
+  box-shadow: 0 0.2rem 3rem rgba(0, 0, 0, 0.2);
+}
+
+#weathercon {
+  font-size: 2.2rem;
+  margin: 55px;
+}
+
+.fa-sun {
+  font-size: 2.5rem;
+  animation: fas-anime 3s linear infinite alternate;
+}
+
+@keyframes fas-anime {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1.5);
+  }
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  margin-top: 30px;
+}
+
+.location {
+  margin-bottom: 20px;
+}
+
+.fa-street-view {
+  animation: rotates 3s linear infinite alternate;
+}
+
+@keyframes rotates {
+  from {
+    transform: translate(-0.5rem);
+  }
+  to {
+    transform: translate(0.5rem);
+  }
+}
+
+#date {
+  margin-top: 20px;
+}
+
+.temp {
+  margin-top: 20px;
+  font-size: 2rem;
+}
+
+.tempmin_max {
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 975px) {
+  .box {
+    width: 250px;
+  }
+}
+     
+    </style>
+    <title>Weather App</title>
+  </head>
+
+  <body>
+      <div class="box">
+        
+      <div id="weathercon">
+      </div>
+      <div class="info">
+        <h2 class="location">
+          <i class="fas fa-street-view"></i>
+          {%location%}, {%country%}
+        </h2>
+        <p id="date">THU | MAY 13 | 6:39 PM</p>
+        <div class="temp">{%tempVal%}°C</div>
+        <h3 class="tempmin_max">Min {%tempMin%}°C | Max {%tempMax%}°C  </h3>
+<script>
+const currDate = document.getElementById("date");
+let weatherCon = document.getElementById("weathercon");
+
+const tempStatus = "{%tempStatus%}";
+if (tempStatus == "Clear") {
+            weathercon.innerHTML = "<i class='fas fa-sun' style='color: #eccc68'></i>"
+        }
+        else if (tempStatus == "Clouds") {
+            weathercon.innerHTML = "<i class='fas fa-cloud' style='color: #f1f2f6;'></i>"
+        }
+        else if (tempStatus == "Rainy") {
+            weathercon.innerHTML = "<i class='fas fa-cloud-rain' style='color: #a4bobe;'></i>"
+        }
+        else {
+            weathercon.innerHTML = "<i class='fas fa-cloud style='color: #44c3de;'></i>"
+        }
+
+
+const getCurrDay = () => {
+  //   let weekDay = new Array(7);
+  //   weekDay[0] = "SUN";
+  //   weekDay[1] = "MON";
+  //   weekDay[2] = "TUE";
+  //   weekDay[3] = "WED";
+  //   weekDay[4] = "ThU";
+  //   weekDay[5] = "FRI";
+  //   weekDay[6] = "SAT";
+
+  let weekDay = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  let currTime = new Date();
+  //   console.log(weekDay[currTime.getDay()])
+  let day = weekDay[currTime.getDay()];
+  return day;
+};
+
+const getCurrentTime = () => {
+  let months = [
+    "JAN",
+    "FEB",
+    "MAR",
+    "APR",
+    "MAY",
+    "JUNE",
+    "JULY",
+    "AUG",
+    "SEP",
+    "OCT",
+    "NOV",
+    "DEC",
+  ];
+  let now = new Date();
+  let month = now.getMonth();
+  let date = now.getDate();
+
+  mainMonth = months[month];
+  let hours = now.getHours();
+  let mins = now.getMinutes();
+
+  let period = "AM";
+  if (hours > 11) {
+    period = "PM";
+    if (hours > 12) hours -= 12;
+  }
+
+  if (mins < 10) {
+    mins = "0" + mins;
+  }
+
+  //   console.log(month, day, year);
+  //   console.log(months[month]);
+  let currTime = `${mainMonth} ${date} | ${hours}:${mins} ${period}`;
+  return currTime;
+};
+
+//getCurrDay();
+
+currDate.innerHTML = getCurrDay() + " | " + getCurrentTime();
+
+        </script>
+    </body>   
+</html>
